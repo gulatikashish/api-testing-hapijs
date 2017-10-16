@@ -1,0 +1,28 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var userSchema = new Schema({
+    name: String,
+    email_id: { type: String, unique: true,required: true },     
+    dob:{ type: Date},
+    mobile_number: Number,
+    studio_id:Number,
+    password: String,
+    profile_image: String,
+    description:String,
+    location_details:String,
+    location_latitude:String,
+    location_longitude:String,
+    is_email_verified:{ type: Number, default: 0 },//0 for verification pending and 1 for verified
+    email_verification_code:{ type: String, default: 0 },
+    is_notification_on:{ type: Number, default: 0 },//0 for notification off and 1 for notification on
+    device_type:{ type: Number, default: 1 }, // 1-android, 2-ios
+    device_serial_no:{ type: String},
+    device_token:{ type: String},
+    login_type: { type: Number, default: 0 },//0 for customer and 1 for trainers
+    add_date: { type: Date, default: Date.now },
+    status: { type: Number, default: 0 } // 0 for in-active and 1 for ative
+    //hourly_charges:Number,//euro and only in case of trainers. User don't have any hourly charges    
+}, { collection: 'users' });
+
+module.exports = mongoose.model('Users',userSchema);
