@@ -44,6 +44,31 @@ exports.register = function (server, options, next) {
             }
         }
     });
+    server.route({
+        path: '/users/like',
+        method: 'POST',
+        config: {
+            handler: (req, res) => {
+                controller.USER_LIKE(req, res)
+            },
+            description: 'get the list of the questions that the user has liked',
+            notes: 'get the liked questions list of the particular user',
+            tags: ['api'],
+            validate: {
+                payload: {
+                    user_id: Joi.string()
+                        .required(),
+                  
+                }
+            },
+            plugins: {
+                'hapi-swagger': {
+                    payloadType: 'form',
+
+                }
+            }
+        }
+    });
 
 
     server.route({
@@ -296,6 +321,35 @@ exports.register = function (server, options, next) {
                 payload: {
                     user_id: Joi.string()
                         .required(),
+                }
+            },
+            plugins: {
+                'hapi-swagger': {
+                    payloadType: 'form',
+                }
+            }
+        }
+    });
+    server.route({
+        path: '/users/rating',
+        method: 'POST',
+        config: {
+            handler: (req, res) => {
+                controller.POST_RATING(req, res)
+            },
+            description: 'get the detail of the user',
+            notes: 'git the detail of the user',
+            tags: ['api'],
+            validate: {
+                payload: {
+                    user_id: Joi.string()
+                        .required(),
+                        question_id: Joi.string()
+                        .required(),
+                        star:Joi.number()
+                        .required(),
+
+
                 }
             },
             plugins: {

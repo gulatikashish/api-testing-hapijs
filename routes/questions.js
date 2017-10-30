@@ -37,7 +37,7 @@ exports.register = function (server, options, next) {
             plugins: {
                 'hapi-swagger': {
                     payloadType: 'form',
-                   
+
                 }
             }
         }
@@ -53,6 +53,32 @@ exports.register = function (server, options, next) {
             description: 'Get the list of all Questions',
             notes: 'Get the list of questions',
             tags: ['api'],
+        }
+    });
+    server.route({
+        path: '/questions/getall',
+        method: 'post',
+        config: {
+            handler: (req, res) => {
+                controller.GET_ALL_QUESTION(req, res)
+            },
+            description: 'Get the list of all Questions',
+            notes: 'Get the list of questions',
+            tags: ['api'],
+            validate: {
+                payload: {
+                    page: Joi.number()
+                        .optional(),
+
+
+                }
+            },
+            plugins: {
+                'hapi-swagger': {
+                    payloadType: 'form',
+
+                }
+            }
         }
     });
     server.route({
@@ -80,7 +106,7 @@ exports.register = function (server, options, next) {
             plugins: {
                 'hapi-swagger': {
                     payloadType: 'form',
-                   
+
                 }
             }
         }
@@ -106,7 +132,7 @@ exports.register = function (server, options, next) {
             plugins: {
                 'hapi-swagger': {
                     payloadType: 'form',
-                   
+
                 }
             }
         }
@@ -132,7 +158,59 @@ exports.register = function (server, options, next) {
             plugins: {
                 'hapi-swagger': {
                     payloadType: 'form',
-                   
+
+                }
+            }
+        }
+    });
+    server.route({
+        path: '/questions/type_based_question',
+        method: 'POST',
+        config: {
+            handler: (req, res) => {
+                controller.TYPE_DETAIL(req, res)
+
+            },
+            description: 'get the question list on the basis of the type',
+            notes: 'get the question list on the basis of the type',
+            tags: ['api'],
+            validate: {
+                payload: {
+                    question_type: Joi.string()
+                        .required(),
+                }
+            },
+            plugins: {
+                'hapi-swagger': {
+                    payloadType: 'form',
+
+                }
+            }
+        }
+    });
+    server.route({
+        path: '/questions/like',
+        method: 'POST',
+        config: {
+            handler: (req, res) => {
+                controller.LIKE_QUESTION(req, res)
+
+            },
+            description: 'like the questions',
+            notes: 'like the questions',
+            tags: ['api'],
+            validate: {
+                payload: {
+                    question_id: Joi.string()
+                        .required(),
+                    user_id: Joi.string()
+                        .required(),
+                }
+            },
+            plugins: {
+                'hapi-swagger': {
+                    payloadType: 'form',
+
                 }
             }
         }
